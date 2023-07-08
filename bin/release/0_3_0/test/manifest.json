@@ -3,10 +3,7 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "parts": [
-        { "path": "esp32_test-bootloader.bin", "offset": 0 },
-        { "path": "esp32_test-firmware.bin", "offset": 65536 }
-      ]
+      "parts": [{ "path": "esp32_test-firmware.bin", "offset": 0 }]
     },
     {
       "chipFamily": "ESP8266",
