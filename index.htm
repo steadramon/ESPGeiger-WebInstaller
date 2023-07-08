@@ -104,23 +104,23 @@
         <li>Wait a while, the process is a lot faster if you stay on this tab.</li>
       </ol><br><br>
       <h3>Geiger Counter Type</h3>
-      <select id="buildtype" class="btn">
+      <select id="buildtype" class="btn" onchange="setManifest()">
         <optgroup label="Pulse">
-          <option>Pulse</option>
-          <option>Pulse (No PCNT, ESP32 only)</option>
+          <option data-manifest="pulse">Pulse</option>
+          <option data-manifest="pulse_no_pcnt">Pulse (No PCNT, ESP32 only)</option>
         </optgroup>
         <optgroup label="Serial">
-          <option>GC10</option>
-          <option>GC10-next</option>
-          <option>MightyOhm</option>
+          <option data-manifest="gc10">GC10</option>
+          <option data-manifest="gc10next">GC10-next</option>
+          <option data-manifest="mightyohm">MightyOhm</option>
         </optgroup>
         <optgroup label="Hardware">
-          <option>ESPGeiger-HW</option>
-          <option>CAJOE IOT-GM</option>
+          <option data-manifest="espgeigerhw" data-nooled="true">ESPGeiger-HW</option>
+          <option data-manifest="cajoeiot" data-nooled="true">CAJOE IOT-GM</option>
         </optgroup>
         <optgroup label="Test Build">
-          <option>Test</option>
-          <option>Test-Pulse</option>
+          <option data-manifest="test">Test</option>
+          <option data-manifest="test_pulse">Test-Pulse</option>
         </optgroup>
         </select>
         <div id="screen">
@@ -130,7 +130,7 @@
       <div class="container inst-button">
         <esp-web-install-button
           id="inst"
-          manifest="bin/release/0_3_0/test/oled/manifest.json"
+          manifest="bin/release/0_3_0/test/manifest.json"
         >
           <button class="btn" slot="activate">Install</button>
         </esp-web-install-button><br>
@@ -138,7 +138,7 @@
         <!-- add new builds here -->
         <select id="ver" class="btn">
           <optgroup label="Release">
-            <option>0.3.0</option>
+            <option data-manifest="0_3_0">0.3.0</option>
           </optgroup>
         </select>
       </div>    
@@ -149,8 +149,29 @@
 
   </div>
 <script>
+  function setManifest() {
+    var buildtype = document.getElementById('buildtype');
+    var buildtype_opt = buildtype.options[buildtype.selectedIndex];
+
+    var sel = document.getElementById('ver');
+    var opt = sel.options[sel.selectedIndex];
+    var m = 'bin/release/'+ opt.dataset.manifest + '/' + buildtype_opt.dataset.manifest + '/';
+
+    var me = buildtype_opt.dataset.nooled;
+    document.getElementById('screen').style.display = me ? "none":"block";
+    if (!me && document.getElementById('sd1306').checked) {
+      m += 'oled/';
+    }
+
+    m += 'manifest.json';
+
+    document.getElementById('inst').setAttribute('manifest',m);
+    document.getElementById('verstr').textContent = opt.text;
+  }
+
   function checkSupported() {
     if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
+    else setManifest();
   }
   
   function unsupported() {
