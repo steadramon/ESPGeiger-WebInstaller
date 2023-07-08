@@ -1,0 +1,13 @@
+{
+  "name": "ESPGeiger MightyOhm v0.3.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "esp32oled_mightyohm-firmware.bin", "offset": 0 }]
+    },
+    {
+      "chipFamily": "ESP8266",
+      "parts": [{ "path": "esp8266oled_mightyohm-firmware.bin", "offset": 0 }]
+    }
+  ]
+}
