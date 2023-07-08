@@ -124,7 +124,10 @@
           <option>Test-MightOhm</option>
         </optgroup>
         </select>
-
+        <div id="screen">
+          <input type="checkbox" id="sd1306" name="sd1306" onchange="setManifest()">
+          <label for="sd1306"> I have a SD1306 OLED screen connected</label><br>
+        </div>
       <div class="container inst-button">
         <esp-web-install-button
           id="inst"
