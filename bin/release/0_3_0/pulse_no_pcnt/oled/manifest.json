@@ -3,7 +3,7 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "parts": [{ "path": "esp32_pulse_no_pcnt-firmware.bin", "offset":0 }]
-    },
+      "parts": [{ "path": "esp32_pulse_no_pcnt-firmware.bin", "offset": 0 }]
+    }
   ]
 }
