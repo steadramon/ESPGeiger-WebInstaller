@@ -70,22 +70,23 @@
         <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
         <li>Wait a while, the process is a lot faster if you stay on this tab.</li>
       </ol><br><br>
-    </div>
-    <div class="container inst-button">
-      <esp-web-install-button
-        id="inst"
-        manifest=""
-      >
-        <button class="btn" slot="activate">Install</button>
-      </esp-web-install-button><br>
-    
-      <!-- add new builds here -->
-      <select id="ver" class="btn">
-        <optgroup label="Release">
-          <option>0.3.0</option>
-        </optgroup>
-      </select><br><br>
+
+      <div class="container inst-button">
+        <esp-web-install-button
+          id="inst"
+          manifest=""
+        >
+          <button class="btn" slot="activate">Install</button>
+        </esp-web-install-button><br>
       
+        <!-- add new builds here -->
+        <select id="ver" class="btn">
+          <optgroup label="Release">
+            <option>0.3.0</option>
+          </optgroup>
+        </select><br><br>
+    </div>
+
       Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>
       <br><a href="https://github.com/steadramon/ESPGeiger" target="_blank">GitHub</a>
     
