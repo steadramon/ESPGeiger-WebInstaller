@@ -20,16 +20,82 @@
       background-color: #222;
       overflow: hidden;
     }
-  </style>
+    a {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .main {
+      animation: fi 1.5s .7s both;
+    }
+    ol {
+      margin: auto;
+      text-align: left;
+      display: inline-block;
+    }
+    
+    li::marker {
+      text-decoration: bold;
+      color: #09f;
+    }
+    
+    li {
+      margin: 5px;
+    }
+        </style>
   <script
     type="module"
     src="installer/install-button.js"
   ></script>
 </head>
-<body>
-Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a><br>
-<script>
+<body onload="checkSupported()">
+  <div class="main">
+    <h2>Welcome to the ESPGeiger web installer!</h2>
+    <div id="flasher">
+      <ol>
+        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span id="verstr">X.X.X</span> to it.</li>
+        <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
+        <li>Wait a while, the process is a lot faster if you stay on this tab.</li>
+      </ol><br><br>
+    </div>
+  </div>
+  <div class="container inst-button">
+    <esp-web-install-button
+      id="inst"
+      manifest=""
+    >
+      <button class="btn" slot="activate">Install</button>
+    </esp-web-install-button><br>
+  
+    <!-- add new builds here -->
+    <select id="ver" class="btn">
+      <optgroup label="Release">
+        <option>0.3.0</option>
+      </optgroup>
+    </select><br><br>
+    
 
+  </div>
+  Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>
+  <br><a href="https://github.com/steadramon/ESPGeiger" target="_blank">GitHub</a>
+<script>
+  function checkSupported() {
+    if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
+  }
+  
+  function unsupported() {
+    document.getElementById('flasher').innerHTML = "Sorry, your browser is not yet supported!<br>Please try on Desktop Chrome or Edge.<br>"
+  }
+
+  function showSerialHelp() {
+    document.getElementById('coms').innerHTML = `Hit "Install" and select the correct COM port.<br><br>
+    You might be missing the drivers for your board.<br>
+    Here are drivers for chips commonly used in ESP boards:<br>
+    <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank">CP2102 (square chip)</a><br>
+    <a href="https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers" target="_blank">CH34x (rectangular chip)</a><br><br>
+    Make sure your USB cable supports data transfer.<br><br>
+    `;
+  }
 </script>
 </body>
 </html>
