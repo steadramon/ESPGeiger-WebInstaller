@@ -1,0 +1,9 @@
+{
+  "name": "ESPGeiger Test v0.3.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "esp32_cajoe_iotgm-firmware.bin", "offset": 0 }]
+    },
+  ]
+}
