@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger Pulse OLED v0.3.0",
+  "name": "ESPGeiger OLED Pulse v0.3.0",
   "builds": [
     {
       "chipFamily": "ESP32",

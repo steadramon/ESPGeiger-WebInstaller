@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger MightyOhm v0.3.0",
+  "name": "ESPGeiger OLED MightyOhm v0.3.0",
   "builds": [
     {
       "chipFamily": "ESP32",
