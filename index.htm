@@ -107,22 +107,20 @@
       <select id="buildtype" class="btn">
         <optgroup label="Pulse">
           <option>Pulse</option>
-          <option>Pulse (No PCNT)</option>
+          <option>Pulse (No PCNT, ESP32 only)</option>
         </optgroup>
         <optgroup label="Serial">
           <option>GC10</option>
           <option>GC10-next</option>
-          <option>MightOhm</option>
+          <option>MightyOhm</option>
         </optgroup>
         <optgroup label="Hardware">
           <option>ESPGeiger-HW</option>
           <option>CAJOE IOT-GM</option>
         </optgroup>
         <optgroup label="Test Build">
+          <option>Test</option>
           <option>Test-Pulse</option>
-          <option>Test-GC10</option>
-          <option>Test-GC10-next</option>
-          <option>Test-MightOhm</option>
         </optgroup>
         </select>
         <div id="screen">
@@ -132,7 +130,7 @@
       <div class="container inst-button">
         <esp-web-install-button
           id="inst"
-          manifest="bin/release/0_3_0/test/manifest.json"
+          manifest="bin/release/0_3_0/test/oled/manifest.json"
         >
           <button class="btn" slot="activate">Install</button>
         </esp-web-install-button><br>

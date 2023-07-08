@@ -1,0 +1,16 @@
+{
+  "name": "ESPGeiger Pulse OLED v0.3.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "esp32oled_test-bootloader.bin", "offset": 0 },
+        { "path": "esp32oled_test-firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP8266",
+      "parts": [{ "path": "esp8266oled_test-firmware.bin", "offset": 0 }]
+    }
+  ]
+}
