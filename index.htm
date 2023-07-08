@@ -11,6 +11,39 @@
       margin: 0;
       color: #fff;
     }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+      background-size: 12px;
+      background-position: 206px 17px;
+      padding-left: 12px !important;
+      background-repeat: no-repeat;
+      outline: none;
+    }
+    select:-moz-focusring {
+      transition-duration: 0s;
+      color: transparent;
+      text-shadow: 0 0 0 #fff;
+    }
+    option {
+      background-color: var(--c-3);
+      color: var(--c-f);
+    }
+    .btn {
+      outline: none;
+      cursor: pointer;
+      padding: 8px;
+      margin: 10px;
+      width: 230px;
+      font-family: Verdana, Helvetica, sans-serif;
+      font-size: 19px;
+      background-color: #333;
+      color: white;
+      border: 0px solid white;
+      border-radius: 25px;
+    }
     .container {
       width: 80%;
       max-width: 510px;
@@ -70,6 +103,27 @@
         <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
         <li>Wait a while, the process is a lot faster if you stay on this tab.</li>
       </ol><br><br>
+      <h3>Geiger Counter Type</h3>
+      <select id="buildtype" class="btn">
+        <optgroup label="Pulse">
+          <option>Pulse</option>
+          <option>Pulse (No PCNT)</option>
+        </optgroup>
+        <optgroup label="ESPGeiger-HW">
+          <option>ESPGeiger-HW</option>
+        </optgroup>
+        <optgroup label="Serial">
+          <option>GC10</option>
+          <option>GC10-next</option>
+          <option>MightOhm</option>
+        </optgroup>
+        <optgroup label="Test Build">
+          <option>Test-Pulse</option>
+          <option>Test-GC10</option>
+          <option>Test-GC10-next</option>
+          <option>Test-MightOhm</option>
+        </optgroup>
+        </select>
 
       <div class="container inst-button">
         <esp-web-install-button
