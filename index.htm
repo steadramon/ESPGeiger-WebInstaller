@@ -116,8 +116,8 @@
           <option data-manifest="mightyohm">MightyOhm</option>
         </optgroup>
         <optgroup label="Hardware">
-          <option data-manifest="espgeigerhw" data-nooled="true">ESPGeiger-HW</option>
-          <option data-manifest="cajoeiot" data-nooled="true">CAJOE IOT-GM</option>
+          <option data-manifest="espgeigerhw" data-advice="Please disconnect the ESP board from the mainboard first." data-nooled="true">ESPGeiger-HW</option>
+          <option data-manifest="cajoeiot" data-advice="Please disconnect the ESP board from the mainboard first." data-nooled="true">CAJOE IOT-GM</option>
         </optgroup>
         <optgroup label="Test Build">
           <option data-manifest="test">Test</option>
@@ -128,6 +128,7 @@
           <input type="checkbox" id="sd1306" name="sd1306" onchange="setManifest()">
           <label for="sd1306"> I have a SD1306 OLED screen connected</label><br>
         </div>
+        <div id="advice"></div>
       <div class="container inst-button">
         <esp-web-install-button
           id="inst"
@@ -166,6 +167,14 @@
     }
 
     m += 'manifest.json';
+
+    var advice = buildtype_opt.dataset.advice;
+    document.getElementById('advice').style.display = advice ? "block":"none";
+    if (advice) {
+      document.getElementById('advice').textContent = advice;
+    } else {
+      document.getElementById('advice').textContent = "";
+    }
 
     document.getElementById('inst').setAttribute('manifest',m);
     document.getElementById('verstr').textContent = opt.text;
