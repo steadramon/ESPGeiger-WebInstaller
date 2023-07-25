@@ -1,0 +1,13 @@
+{
+  "name": "ESPGeiger OLED GC10Next v0.3.1",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "esp32oled_gc10next-firmware.bin", "offset":  0 }]
+    },
+    {
+      "chipFamily": "ESP8266",
+      "parts": [{ "path": "esp8266oled_gc10next-firmware.bin", "offset": 0 }]
+    }
+  ]
+}

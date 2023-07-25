@@ -100,7 +100,7 @@
     <div id="flasher">
       <ol>
         <li>Select your counter type.</li>
-        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span id="verstr">X.X.X</span> to it.</li>
+        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span id="verstr">v0.3.1</span> to it.</li>
         <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
         <li>Wait a while, the process is a lot faster if you stay on this tab.<br/></li>
       </ol>
@@ -133,17 +133,11 @@
       <div class="container inst-button">
         <esp-web-install-button
           id="inst"
-          manifest="bin/release/0_3_0/test/manifest.json"
+          manifest="bin/test/manifest.json"
         >
           <button class="btn" slot="activate">Install</button>
         </esp-web-install-button><br>
       
-        <!-- add new builds here -->
-        <select id="ver" class="btn">
-          <optgroup label="Release">
-            <option data-manifest="0_3_0">0.3.0</option>
-          </optgroup>
-        </select>
       </div>    
     </div>
     <br><br>
@@ -158,9 +152,7 @@
     var buildtype = document.getElementById('buildtype');
     var buildtype_opt = buildtype.options[buildtype.selectedIndex];
 
-    var sel = document.getElementById('ver');
-    var opt = sel.options[sel.selectedIndex];
-    var m = 'bin/release/'+ opt.dataset.manifest + '/' + buildtype_opt.dataset.manifest + '/';
+    var m = 'bin/' + buildtype_opt.dataset.manifest + '/';
 
     var me = buildtype_opt.dataset.nooled;
     document.getElementById('screen').style.display = me ? "none":"block";
@@ -179,7 +171,6 @@
     }
 
     document.getElementById('inst').setAttribute('manifest',m);
-    document.getElementById('verstr').textContent = opt.text;
   }
 
   function checkSupported() {

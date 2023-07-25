@@ -1,9 +1,0 @@
-{
-  "name": "ESPGeiger-HW v0.3.0",
-  "builds": [
-    {
-      "chipFamily": "ESP8266",
-      "parts": [{ "path": "espgeigerhw-firmware.bin", "offset": 0 }]
-    }
-  ]
-}
