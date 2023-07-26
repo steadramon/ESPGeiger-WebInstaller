@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED Pulse No PCNT v0.3.1",
+  "name": "ESPGeiger OLED Pulse No PCNT v0.3.2",
   "builds": [
     {
       "chipFamily": "ESP32",

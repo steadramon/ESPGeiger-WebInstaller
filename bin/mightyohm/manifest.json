@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger MightyOhm v0.3.1",
+  "name": "ESPGeiger MightyOhm v0.3.2",
   "builds": [
     {
       "chipFamily": "ESP32",
