@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED GC10 v0.3.6",
+  "name": "ESPGeiger OLED GC10 v0.3.7",
   "builds": [
     {
       "chipFamily": "ESP32",

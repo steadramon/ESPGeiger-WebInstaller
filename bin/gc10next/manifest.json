@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger GC10Next v0.3.6",
+  "name": "ESPGeiger GC10Next v0.3.7",
   "builds": [
     {
       "chipFamily": "ESP32",

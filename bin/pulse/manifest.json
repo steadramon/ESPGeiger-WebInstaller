@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger Pulse v0.3.6",
+  "name": "ESPGeiger Pulse v0.3.7",
   "builds": [
     {
       "chipFamily": "ESP32",

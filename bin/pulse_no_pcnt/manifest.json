@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger Pulse No PCNT v0.3.6",
+  "name": "ESPGeiger Pulse No PCNT v0.3.7",
   "builds": [
     {
       "chipFamily": "ESP32",
