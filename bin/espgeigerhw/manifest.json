@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger-HW v0.3.7",
+  "name": "ESPGeiger-HW v0.3.8",
   "builds": [
     {
       "chipFamily": "ESP8266",
