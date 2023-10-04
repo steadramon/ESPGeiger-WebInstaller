@@ -1,5 +1,6 @@
 {
-  "name": "ESPGeiger GC10 v0.3.8",
+  "name": "ESPGeiger GC10 v0.3.9",
+  "new_install_prompt_erase": true,
   "builds": [
     {
       "chipFamily": "ESP32",
