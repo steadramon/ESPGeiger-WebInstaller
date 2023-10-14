@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED Pulse No PCNT v0.4.1",
+  "name": "ESPGeiger OLED Pulse No PCNT v0.4.2",
   "new_install_prompt_erase": true,
   "builds": [
     {
