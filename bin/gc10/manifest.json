@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger GC10 v0.4.0",
+  "name": "ESPGeiger GC10 v0.4.1",
   "new_install_prompt_erase": true,
   "builds": [
     {
