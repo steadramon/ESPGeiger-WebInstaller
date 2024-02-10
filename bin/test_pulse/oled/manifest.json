@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED Test Pulse v0.4.4",
+  "name": "ESPGeiger OLED Test Pulse v0.4.5",
   "new_install_prompt_erase": true,
   "builds": [
     {
