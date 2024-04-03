@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger Pulse No PCNT v0.4.6",
+  "name": "ESPGeiger Pulse No PCNT v0.5.0",
   "new_install_prompt_erase": true,
   "builds": [
     {

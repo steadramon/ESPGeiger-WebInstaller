@@ -103,10 +103,10 @@
     <div id="flasher">
       <ol>
         <li>Select your counter type.</li>
-        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span class="verstr" id="verstr">v0.4.6</span> to it.</li>
+        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span class="verstr" id="verstr">v0.5.0</span> to it.</li>
         <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
-        <li>Wait a while, the process is a lot faster if you stay on this tab.<br/></li>
-        <li>Once installed, look for a new hotspot with the name format <b>ESPGeiger-XXXXXX</b><br/></li>
+        <li>Wait a while whilst the firmware is installed - the process is a lot faster if you stay on this tab.<br/></li>
+        <li>Once installed, look for a new hotspot with the name format <b>ESPGeiger-XXXXXX - connect to it and continue configuration.</b><br/></li>
       </ol>
       <p><b>Note:</b> This will erase any current firmware and settings.</p><br>
       <h3>Geiger Counter Type</h3>
@@ -121,9 +121,9 @@
           <option data-manifest="mightyohm">MightyOhm</option>
         </optgroup>
         <optgroup label="Hardware">
-          <option data-manifest="espgeigerhw" data-advice="WebOTA is recommended. Download the <a download='espgeigerhw-firmware.v0.4.6.bin' href='/bin/espgeigerhw/espgeigerhw-firmware.bin'>latest firmware</a> and upload via the web interface.<br/>Please disconnect the ESP board from the mainboard first if choose to continue here." data-nooled="true">ESPGeiger-HW</option>
-          <option data-manifest="espgeigerlog" data-nooled="true">ESPGeiger-Log</option>
-          <option data-manifest="cajoeiot" data-advice="Please disconnect the ESP board from the mainboard first." data-nooled="true">CAJOE IOT-GM</option>
+          <option data-manifest="espgeigerhw" data-advice="WebOTA is recommended. Download the <a download='espgeigerhw-firmware.v0.5.0.bin' href='/bin/espgeigerhw/espgeigerhw-firmware.bin'>latest firmware</a> and upload via the web interface.<br/>Please disconnect the ESP8266 from the mainboard first if you choose to continue here." data-nooled="true">ESPGeiger-HW</option>
+          <option data-manifest="espgeigerlog" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog-firmware.v0.5.0.bin href='https://install.espgeiger.com/bin/espgeigerlog/espgeigerlog-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log</option>
+          <option data-manifest="cajoeiot" data-advice="Please disconnect the ESP32 board from the mainboard first." data-nooled="true">CAJOE IOT-GM</option>
         </optgroup>
         <optgroup label="Test Build">
           <option data-manifest="test">Test</option>
@@ -179,6 +179,16 @@
   }
 
   function checkSupported() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const boardParam = urlParams.get('board');
+    if (boardParam) {
+      for (i = 0; i < document.getElementById("buildtype").length; ++i){
+        if (document.getElementById("buildtype").options[i].dataset.manifest == boardParam){
+          document.getElementById('buildtype').selectedIndex = i;
+        }
+      }
+    }
+
     if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
     else setManifest();
   }
