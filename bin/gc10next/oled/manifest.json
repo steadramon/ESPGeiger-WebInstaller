@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED GC10Next v0.5.2",
+  "name": "ESPGeiger OLED GC10Next v0.5.3",
   "new_install_prompt_erase": true,
   "builds": [
     {
