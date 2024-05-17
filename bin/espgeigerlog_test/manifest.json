@@ -1,0 +1,10 @@
+{
+  "name": "ESPGeiger-Log Test v0.5.4",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [{ "path": "espgeigerlog_test-firmware.bin", "offset": 0 }]
+    }
+  ]
+}

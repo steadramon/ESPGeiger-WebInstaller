@@ -1,0 +1,10 @@
+{
+  "name": "ESPGeiger-Log GC10Next v0.5.4",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [{ "path": "espgeigerlog_gc10next-firmware.bin", "offset": 0 }]
+    }
+  ]
+}
