@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger OLED Test v0.8.0",
+  "name": "ESPGeiger OLED Test {version}",
   "new_install_prompt_erase": true,
   "builds": [
     {

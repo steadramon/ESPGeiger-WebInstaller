@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger-HW v0.8.0",
+  "name": "ESPGeiger-HW {version}",
   "new_install_prompt_erase": true,
   "builds": [
     {

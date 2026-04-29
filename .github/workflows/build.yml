@@ -1,0 +1,121 @@
+name: Build Installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to fetch (default: latest)'
+        required: false
+        default: ''
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+# One build per ref at a time.
+concurrency:
+  group: installer-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reset_firmware:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Force-create empty firmware branch
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git switch --orphan _empty
+          git commit --allow-empty -m "Initial commit"
+          git push -u origin _empty -f
+          git push origin --delete firmware || true
+          git push origin _empty:firmware -f
+          git push origin --delete _empty
+
+  build:
+    runs-on: ubuntu-latest
+    needs: reset_firmware
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: firmware
+
+      - name: Merge main into firmware
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git remote add -f mrg_main "https://github.com/${{ github.repository }}" --track main
+          rm -rf .github
+          git merge mrg_main/main --allow-unrelated-histories --no-edit
+
+      - name: Download release artifacts
+        uses: robinraju/release-downloader@v1.10
+        id: releaseid
+        with:
+          repository: "steadramon/ESPGeiger"
+          latest: ${{ github.event.inputs.tag == '' }}
+          tag: ${{ github.event.inputs.tag }}
+          fileName: "*.bin"
+          out-file-path: "downloaded"
+
+      - name: Move firmware files into bin/<env>/
+        run: |
+          # ESPGeiger-Log (ESP8266-only) builds
+          mv ./downloaded/espgeigerhw-firmware.*bin           bin/espgeigerhw/espgeigerhw-firmware.bin
+          mv ./downloaded/espgeigerlog-firmware.*bin          bin/espgeigerlog/espgeigerlog-firmware.bin
+          mv ./downloaded/espgeigerlog_serial-firmware.*bin   bin/espgeigerlog_serial/espgeigerlog_serial-firmware.bin
+          mv ./downloaded/espgeigerlog_test-firmware.*bin     bin/espgeigerlog_test/espgeigerlog_test-firmware.bin
+
+          # CAJOE single-build
+          mv ./downloaded/esp32_cajoe_iotgm-firmware_merged.*bin bin/cajoeiot/esp32_cajoe_iotgm-firmware.bin
+
+          # Serial (collapsed - protocol picked at runtime in web portal)
+          mv ./downloaded/esp32_serial-firmware_merged.*bin   bin/serial/esp32_serial-firmware.bin
+          mv ./downloaded/esp8266_serial-firmware.*bin        bin/serial/esp8266_serial-firmware.bin
+          mv ./downloaded/esp32oled_serial-firmware_merged.*bin bin/serial/oled/esp32oled_serial-firmware.bin
+          mv ./downloaded/esp8266oled_serial-firmware.*bin    bin/serial/oled/esp8266oled_serial-firmware.bin
+
+          # Pulse
+          mv ./downloaded/esp32_pulse-firmware_merged.*bin    bin/pulse/esp32_pulse-firmware.bin
+          mv ./downloaded/esp8266_pulse-firmware.*bin         bin/pulse/esp8266_pulse-firmware.bin
+          mv ./downloaded/esp32oled_pulse-firmware_merged.*bin bin/pulse/oled/esp32oled_pulse-firmware.bin
+          mv ./downloaded/esp8266oled_pulse-firmware.*bin     bin/pulse/oled/esp8266oled_pulse-firmware.bin
+
+          # Pulse - No PCNT (ESP32 only)
+          mv ./downloaded/esp32_pulse_no_pcnt-firmware_merged.*bin     bin/pulse_no_pcnt/esp32_pulse_no_pcnt-firmware.bin
+          mv ./downloaded/esp32oled_pulse_no_pcnt-firmware_merged.*bin bin/pulse_no_pcnt/oled/esp32oled_pulse_no_pcnt-firmware.bin
+
+          # Test
+          mv ./downloaded/esp32_test-firmware_merged.*bin     bin/test/esp32_test-firmware.bin
+          mv ./downloaded/esp8266_test-firmware.*bin          bin/test/esp8266_test-firmware.bin
+          mv ./downloaded/esp32oled_test-firmware_merged.*bin bin/test/oled/esp32oled_test-firmware.bin
+          mv ./downloaded/esp8266oled_test-firmware.*bin      bin/test/oled/esp8266oled_test-firmware.bin
+
+          # Test pulse
+          mv ./downloaded/esp32_testpulse-firmware_merged.*bin    bin/test_pulse/esp32_testpulse-firmware.bin
+          mv ./downloaded/esp8266_testpulse-firmware.*bin         bin/test_pulse/esp8266_testpulse-firmware.bin
+          mv ./downloaded/esp32oled_testpulse-firmware_merged.*bin bin/test_pulse/oled/esp32oled_testpulse-firmware.bin
+          mv ./downloaded/esp8266oled_testpulse-firmware.*bin     bin/test_pulse/oled/esp8266oled_testpulse-firmware.bin
+
+          rm -rf ./downloaded
+
+      - name: Substitute version tag in manifests + index.htm
+        run: |
+          TAG="${{ steps.releaseid.outputs.tag_name }}"
+          echo "Tagging build as $TAG"
+          sed -i "s#{version}#${TAG}#g" bin/*/manifest.json
+          sed -i "s#{version}#${TAG}#g" bin/*/*/manifest.json
+          sed -i "s#{version}#${TAG}#g" index.htm
+
+      - name: Push built firmware branch
+        run: |
+          COMMIT="Firmware built from ${{ steps.releaseid.outputs.tag_name }}"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -A
+          git commit --allow-empty -m "$COMMIT"
+          git push origin firmware -f

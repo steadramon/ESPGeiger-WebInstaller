@@ -1,5 +1,5 @@
 {
-  "name": "ESPGeiger Test v0.8.0",
+  "name": "ESPGeiger Test {version}",
   "new_install_prompt_erase": true,
   "builds": [
     {
