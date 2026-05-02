@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Install ESPGeiger</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23666' d='M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z'/%3E%3Cpath fill='%23FB2' d='M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z'/%3E%3Cpath fill='%23555' d='M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z'/%3E%3C/svg%3E">
+  <style>
+    body {
+      font-family: "Courier New", Courier, monospace;
+      text-align: center;
+      background-color: #222;
+      margin: 0;
+      color: #fff;
+    }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+      background-size: 12px;
+      background-position: 206px 17px;
+      padding-left: 12px !important;
+      background-repeat: no-repeat;
+      outline: none;
+    }
+    select:-moz-focusring {
+      transition-duration: 0s;
+      color: transparent;
+      text-shadow: 0 0 0 #fff;
+    }
+    option {
+      background-color: var(--c-3);
+      color: var(--c-f);
+    }
+    .btn {
+      outline: none;
+      cursor: pointer;
+      padding: 8px;
+      margin: 10px;
+      width: 230px;
+      font-family: Verdana, Helvetica, sans-serif;
+      font-size: 19px;
+      background-color: #333;
+      color: white;
+      border: 0px solid white;
+      border-radius: 25px;
+    }
+    .container {
+      width: 80%;
+      max-width: 510px;
+      margin: auto;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #222;
+      overflow: hidden;
+    }
+    a {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    @keyframes fi {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .main {
+      animation: fi 1.5s .7s both;
+    }
+    ol {
+      margin: auto;
+      text-align: left;
+      display: inline-block;
+    }
+    
+    li::marker {
+      text-decoration: bold;
+      color: #09f;
+    }
+    
+    li {
+      margin: 5px;
+    }
+    .topleft {
+      position: absolute;
+      top: 0;
+      left: 16px;
+    }
+    .verstr {
+      font-weight: bold;
+    }
+        </style>
+  <script
+    type="module"
+    src="installer/install-button.js"
+  ></script>
+</head>
+<body onload="checkSupported()">
+  <div class="main">
+    <div class="topleft">
+      <p> <svg xmlns="http://www.w3.org/2000/svg"  width="51" height="51"  viewBox="0 0 512 512"><path fill="#666" d="M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z"/><path fill="#FB2" d="M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z"/><path fill="#555" d="M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z"/></svg> </p>
+
+    </div>
+    <h2>Welcome to the ESPGeiger web installer!</h2>
+    <div id="flasher">
+      <ol>
+        <li>Select your counter type.</li>
+        <li>Plug in your ESP to a USB port. We will install ESPGeiger <span class="verstr" id="verstr">v0.9.6</span> to it.</li>
+        <li id="coms">Hit "Install" and select the correct COM port. <a onclick="showSerialHelp()">No device found?</a></li>
+        <li>Wait a while whilst the firmware is installed - the process is a lot faster if you stay on this tab.<br/></li>
+        <li>Once installed, look for a new hotspot with the name format <b>ESPGeiger-XXXXXX</b>.<br/></li>
+        <li>Connect to the new hotspot and continue configuration.<br/></li>
+      </ol>
+      <p><b>Note:</b> This will erase any current firmware and settings.</p><br>
+      <h3>Geiger Counter Type</h3>
+      <select id="buildtype" class="btn" onchange="setManifest()">
+        <optgroup label="Standard">
+          <option data-manifest="pulse">Pulse</option>
+          <option data-manifest="pulse_no_pcnt">Pulse - No PCNT (ESP32 only)</option>
+          <option data-manifest="serial">Serial (GC10/MightyOhm)</option>
+        </optgroup>
+        <optgroup label="Hardware">
+          <option data-manifest="espgeigerhw" data-advice="WebOTA is recommended. Download the <a download='espgeigerhw-firmware.v0.9.6.bin' href='/bin/espgeigerhw/espgeigerhw-firmware.bin'>latest firmware</a> and upload via the web interface.<br/>Please disconnect the ESP8266 from the mainboard first if you choose to continue here." data-nooled="true">ESPGeiger-HW</option>
+          <option data-manifest="espgeigerlog" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog-firmware.v0.9.6.bin' href='/bin/espgeigerlog/espgeigerlog-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log</option>
+          <option data-manifest="cajoeiot" data-advice="Please disconnect the ESP32 board from the mainboard first." data-nooled="true">CAJOE GC-ESP32 IOT-GM</option>
+        </optgroup>
+        <optgroup label="ESPGeiger Log">
+          <option data-manifest="espgeigerlog" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog-firmware.v0.9.6.bin' href='/bin/espgeigerlog/espgeigerlog-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log Pulse</option>
+          <option data-manifest="espgeigerlog_serial" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog_serial-firmware.v0.9.6.bin' href='/bin/espgeigerlog_serial/espgeigerlog_serial-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log Serial (GC10/MightyOhm)</option>
+        </optgroup>
+        <optgroup label="Test Build">
+          <option data-manifest="test">Test</option>
+          <option data-manifest="test_pulse">Test-Pulse</option>
+          <option data-manifest="espgeigerlog_test" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog_test-firmware.v0.9.6.bin' href='/bin/espgeigerlog_test/espgeigerlog_test-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log Test</option>
+        </optgroup>
+        </select>
+        <div id="screen">
+          <input type="checkbox" id="sd1306" name="sd1306" onchange="setManifest()">
+          <label for="sd1306"> I have a SD1306 OLED screen connected</label><br>
+        </div>
+        <div id="advice"></div>
+      <div class="container inst-button">
+        <esp-web-install-button
+          id="inst"
+          manifest="bin/test/manifest.json"
+        >
+          <button class="btn" slot="activate">Install</button>
+        </esp-web-install-button><br>
+      
+      </div>    
+    </div>
+    <br><br>
+    Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>
+    <br><br>
+    <a href="https://github.com/steadramon/ESPGeiger" target="_blank">GitHub</a> | <a href="https://stations.espgeiger.com/privacy" target="_blank">Privacy</a>
+    <br><br>
+    <a href="https://hits.sh/install.espgeiger.com/"><img alt="Hits" src="https://hits.sh/install.espgeiger.com.svg"/></a>
+  </div>
+<script>
+  function setManifest() {
+    var buildtype = document.getElementById('buildtype');
+    var buildtype_opt = buildtype.options[buildtype.selectedIndex];
+
+    var m = 'bin/' + buildtype_opt.dataset.manifest + '/';
+
+    var me = buildtype_opt.dataset.nooled;
+    document.getElementById('screen').style.display = me ? "none":"block";
+    if (!me && document.getElementById('sd1306').checked) {
+      m += 'oled/';
+    }
+
+    m += 'manifest.json';
+
+    var advice = buildtype_opt.dataset.advice;
+    document.getElementById('advice').style.display = advice ? "block":"none";
+    if (advice) {
+      document.getElementById('advice').innerHTML = advice;
+    } else {
+      document.getElementById('advice').innerHTML = "";
+    }
+
+    document.getElementById('inst').setAttribute('manifest',m);
+  }
+
+  function checkSupported() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const boardParam = urlParams.get('board');
+    if (boardParam) {
+      for (i = 0; i < document.getElementById("buildtype").length; ++i){
+        if (document.getElementById("buildtype").options[i].dataset.manifest == boardParam){
+          document.getElementById('buildtype').selectedIndex = i;
+        }
+      }
+    }
+
+    if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
+    else setManifest();
+  }
+  
+  function unsupported() {
+    document.getElementById('flasher').innerHTML = "Sorry, your browser is not yet supported!<br>Please try on Desktop Chrome or Edge.<br>"
+  }
+
+  function showSerialHelp() {
+    document.getElementById('coms').innerHTML = `Hit "Install" and select the correct COM port.<br><br>
+    You might be missing the drivers for your board.<br>
+    Here are drivers for chips commonly used in ESP boards:<br>
+    <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank">CP2102 (square chip)</a><br>
+    <a href="https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers" target="_blank">CH34x (rectangular chip)</a><br><br>
+    Make sure your USB cable supports data transfer.<br><br>
+    `;
+  }
+</script>
+</body>
+</html>

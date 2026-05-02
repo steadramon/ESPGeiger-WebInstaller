@@ -1,0 +1,10 @@
+{
+  "name": "ESPGeiger OLED Pulse No PCNT v0.9.6",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "esp32oled_pulse_no_pcnt-firmware.bin", "offset": 0 }]
+    }
+  ]
+}
