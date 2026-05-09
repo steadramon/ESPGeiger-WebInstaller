@@ -5,11 +5,11 @@
   <link rel="icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23666' d='M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z'/%3E%3Cpath fill='%23FB2' d='M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z'/%3E%3Cpath fill='%23555' d='M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z'/%3E%3C/svg%3E">
   <style>
     body {
-      font-family: "Courier New", Courier, monospace;
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       text-align: center;
-      background-color: #222;
+      background-color: #212529;
       margin: 0;
-      color: #fff;
+      color: #dee2e6;
     }
     select {
       -webkit-appearance: none;
@@ -37,27 +37,29 @@
       padding: 8px;
       margin: 10px;
       width: 230px;
-      font-family: Verdana, Helvetica, sans-serif;
+      font-family: inherit;
       font-size: 19px;
-      background-color: #333;
+      background-color: #0d6efd;
       color: white;
-      border: 0px solid white;
+      border: 0;
       border-radius: 25px;
     }
+    .btn:hover { opacity: .9; }
     .container {
       width: 80%;
       max-width: 510px;
       margin: auto;
       border-radius: 5px;
       box-sizing: border-box;
-      background-color: #222;
+      background-color: #212529;
       overflow: hidden;
     }
     a {
-      color: #fff;
+      color: #dee2e6;
       cursor: pointer;
       text-decoration: underline;
     }
+    a:hover { color: #0d6efd; }
     @keyframes fi {
       from { opacity: 0; }
       to   { opacity: 1; }
@@ -73,7 +75,7 @@
     
     li::marker {
       text-decoration: bold;
-      color: #09f;
+      color: #0d6efd;
     }
     
     li {
