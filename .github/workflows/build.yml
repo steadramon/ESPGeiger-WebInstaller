@@ -55,15 +55,15 @@ jobs:
           mv ./downloaded/esp32oled_serial-firmware_merged.*bin bin/serial/oled/esp32oled_serial-firmware.bin
           mv ./downloaded/esp8266oled_serial-firmware.*bin    bin/serial/oled/esp8266oled_serial-firmware.bin
 
-          # Pulse
-          mv ./downloaded/esp32_pulse-firmware_merged.*bin    bin/pulse/esp32_pulse-firmware.bin
-          mv ./downloaded/esp8266_pulse-firmware.*bin         bin/pulse/esp8266_pulse-firmware.bin
-          mv ./downloaded/esp32oled_pulse-firmware_merged.*bin bin/pulse/oled/esp32oled_pulse-firmware.bin
-          mv ./downloaded/esp8266oled_pulse-firmware.*bin     bin/pulse/oled/esp8266oled_pulse-firmware.bin
+          # Pulse (default: ESP8266 native, ESP32 interrupt-based - no PCNT)
+          mv ./downloaded/esp32_pulse_no_pcnt-firmware_merged.*bin     bin/pulse/esp32_pulse_no_pcnt-firmware.bin
+          mv ./downloaded/esp8266_pulse-firmware.*bin                  bin/pulse/esp8266_pulse-firmware.bin
+          mv ./downloaded/esp32oled_pulse_no_pcnt-firmware_merged.*bin bin/pulse/oled/esp32oled_pulse_no_pcnt-firmware.bin
+          mv ./downloaded/esp8266oled_pulse-firmware.*bin              bin/pulse/oled/esp8266oled_pulse-firmware.bin
 
-          # Pulse - No PCNT (ESP32 only)
-          mv ./downloaded/esp32_pulse_no_pcnt-firmware_merged.*bin     bin/pulse_no_pcnt/esp32_pulse_no_pcnt-firmware.bin
-          mv ./downloaded/esp32oled_pulse_no_pcnt-firmware_merged.*bin bin/pulse_no_pcnt/oled/esp32oled_pulse_no_pcnt-firmware.bin
+          # Pulse - PCNT (ESP32 hardware pulse counter - opt-in)
+          mv ./downloaded/esp32_pulse-firmware_merged.*bin     bin/pulse_pcnt/esp32_pulse-firmware.bin
+          mv ./downloaded/esp32oled_pulse-firmware_merged.*bin bin/pulse_pcnt/oled/esp32oled_pulse-firmware.bin
 
           # Test
           mv ./downloaded/esp32_test-firmware_merged.*bin     bin/test/esp32_test-firmware.bin

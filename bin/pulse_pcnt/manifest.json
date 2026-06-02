@@ -1,0 +1,10 @@
+{
+  "name": "ESPGeiger Pulse PCNT {version}",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "esp32_pulse-firmware.bin", "offset":0 }]
+    }
+  ]
+}

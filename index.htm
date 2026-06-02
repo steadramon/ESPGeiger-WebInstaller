@@ -116,7 +116,7 @@
       <select id="buildtype" class="btn" onchange="setManifest()">
         <optgroup label="Standard">
           <option data-manifest="pulse">Pulse</option>
-          <option data-manifest="pulse_no_pcnt">Pulse - No PCNT (ESP32 only)</option>
+          <option data-manifest="pulse_pcnt">Pulse - PCNT (ESP32 only)</option>
           <option data-manifest="serial">Serial (GC10/MightyOhm)</option>
         </optgroup>
         <optgroup label="Hardware">
@@ -184,7 +184,9 @@
 
   function checkSupported() {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardParam = urlParams.get('board');
+    let boardParam = urlParams.get('board');
+    // Back-compat: pulse_no_pcnt was renamed to pulse_pcnt when the default flipped.
+    if (boardParam === 'pulse_no_pcnt') boardParam = 'pulse_pcnt';
     if (boardParam) {
       for (i = 0; i < document.getElementById("buildtype").length; ++i){
         if (document.getElementById("buildtype").options[i].dataset.manifest == boardParam){
