@@ -116,11 +116,12 @@
       <select id="buildtype" class="btn" onchange="setManifest()">
         <optgroup label="Standard">
           <option data-manifest="pulse">Pulse</option>
+          <option data-manifest="pulse_pcnt">Pulse - PCNT (ESP32 / ESP32-S3)</option>
           <option data-manifest="serial">Serial (GC10/MightyOhm)</option>
         </optgroup>
         <optgroup label="Hardware">
           <option data-manifest="espgeigerhw" data-advice="WebOTA is recommended. Download the <a download='espgeigerhw-firmware.{version}.bin' href='/bin/espgeigerhw/espgeigerhw-firmware.bin'>latest firmware</a> and upload via the web interface.<br/>Please disconnect the ESP8266 from the mainboard first if you choose to continue here." data-nooled="true">ESPGeiger-HW</option>
-          <option data-manifest="espgeigerlog" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog-firmware.{version}.bin' href='/bin/espgeigerlog/espgeigerlog-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log</option>
+<!--          <option data-manifest="espgeigerlog" data-advice="WebOTA is recommended. Download the <a download='espgeigerlog-firmware.{version}.bin' href='/bin/espgeigerlog/espgeigerlog-firmware.bin'>latest firmware</a> and upload via the web interface." data-nooled="true">ESPGeiger-Log</option>-->
           <option data-manifest="cajoeiot" data-advice="Please disconnect the ESP32 board from the mainboard first." data-nooled="true">CAJOE GC-ESP32 IOT-GM</option>
         </optgroup>
         <optgroup label="ESPGeiger Log">

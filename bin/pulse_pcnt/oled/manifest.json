@@ -5,6 +5,10 @@
     {
       "chipFamily": "ESP32",
       "parts": [{ "path": "esp32oled_pulse-firmware.bin", "offset": 0 }]
+    },
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [{ "path": "esp32s3oled_pulse-firmware.bin", "offset": 0 }]
     }
   ]
 }
