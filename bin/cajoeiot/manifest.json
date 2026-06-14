@@ -4,7 +4,13 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "parts": [{ "path": "esp32_cajoe_iotgm-firmware.bin", "offset": 0 }]
+      "parts": [
+        {
+          "path": "esp32_cajoe_iotgm-firmware.bin",
+          "offset": 0
+        }
+      ]
     }
-  ]
+  ],
+  "new_install_improv_wait_time": 10
 }

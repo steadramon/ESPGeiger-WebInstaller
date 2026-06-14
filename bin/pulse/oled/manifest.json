@@ -4,15 +4,31 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "parts": [{ "path": "esp32oled_pulse_no_pcnt-firmware.bin", "offset": 0 }]
+      "parts": [
+        {
+          "path": "esp32oled_pulse_no_pcnt-firmware.bin",
+          "offset": 0
+        }
+      ]
     },
     {
       "chipFamily": "ESP32-S3",
-      "parts": [{ "path": "esp32s3oled_pulse_no_pcnt-firmware.bin", "offset": 0 }]
+      "parts": [
+        {
+          "path": "esp32s3oled_pulse_no_pcnt-firmware.bin",
+          "offset": 0
+        }
+      ]
     },
     {
       "chipFamily": "ESP8266",
-      "parts": [{ "path": "esp8266oled_pulse-firmware.bin", "offset": 0 }]
+      "parts": [
+        {
+          "path": "esp8266oled_pulse-firmware.bin",
+          "offset": 0
+        }
+      ]
     }
-  ]
+  ],
+  "new_install_improv_wait_time": 10
 }

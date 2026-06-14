@@ -88,10 +88,14 @@ jobs:
       - name: Substitute version tag in manifests + index.htm
         run: |
           TAG="${{ steps.releaseid.outputs.tag_name }}"
-          echo "Tagging build as $TAG"
-          sed -i "s#{version}#${TAG}#g" bin/*/manifest.json
-          sed -i "s#{version}#${TAG}#g" bin/*/*/manifest.json
-          sed -i "s#{version}#${TAG}#g" index.htm
+          # Strip the leading "v" so {version} ends up as a clean semver
+          # string (e.g. v0.12.0-RC2 -> 0.12.0-RC2). esp-web-tools shows
+          # this in its dialog and OTA download links use it as a suffix.
+          VERSION="${TAG#v}"
+          echo "Tagging build as $VERSION (release: $TAG)"
+          sed -i "s#{version}#${VERSION}#g" bin/*/manifest.json
+          sed -i "s#{version}#${VERSION}#g" bin/*/*/manifest.json
+          sed -i "s#{version}#${VERSION}#g" index.htm
 
       - name: Force-update firmware branch in place
         run: |
