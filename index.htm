@@ -1,172 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Install ESPGeiger</title>
   <link rel="icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23666' d='M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z'/%3E%3Cpath fill='%23FB2' d='M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z'/%3E%3Cpath fill='%23555' d='M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="brand.css?v=11">
   <style>
-    html {
-      background: #1a1d20;
-      min-height: 100%;
-    }
-    body {
-      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 780px;
-      margin: 1.5em auto;
-      padding: 1.5em 1em;
-      color: #dee2e6;
-      background: #212529;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px #0000001a;
-      text-align: center;
-    }
-    @media (max-width: 640px) {
-      body { margin: 0 auto; border-radius: 0; box-shadow: none; }
-    }
-    .main {
-      margin: 0 auto;
-    }
-    select.field {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      width: 100%;
-      padding: .55em .9em;
-      background: #1a1d20 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='%23adb5bd'><polygon points='0,0 12,0 6,8'/></svg>") no-repeat;
-      background-position: right .8em center;
-      background-size: 10px;
-      color: #dee2e6;
-      border: 1px solid #373b3e;
-      border-radius: 4px;
-      font: inherit;
-      cursor: pointer;
-      outline: none;
-    }
-    select.field:focus { border-color: #06c; }
-    option { background-color: #2b3035; color: #dee2e6; }
-    .btn {
-      outline: none;
-      cursor: pointer;
-      padding: .6em 1.4em;
-      font-family: inherit;
-      font-size: 16px;
-      background-color: #06c;
-      color: #fff;
-      border: 0;
-      border-radius: 4px;
-    }
-    .btn:hover { background-color: #0573e6; }
-    .row-check {
-      display: flex;
-      align-items: center;
-      gap: .5em;
-      margin: .9em 0;
-      color: #dee2e6;
-    }
-    .row-check input { margin: 0; }
+    .main { animation: fi 1.5s .7s both; }
+    @keyframes fi { from { opacity: 0; } to { opacity: 1; } }
+    #screen { display: flex; align-items: center; gap: .5em; margin: .9em 0; }
+    #screen input { margin: 0; }
     .inst-button { text-align: center; margin-top: .8em; }
-    .container {
-      width: 80%;
-      max-width: 510px;
-      margin: auto;
-      border-radius: 5px;
-      box-sizing: border-box;
-      background-color: #212529;
-      overflow: hidden;
-    }
-    .card {
-      background: #2b3035;
-      border: 1px solid #373b3e;
-      border-radius: 4px;
-      padding: 1em 1.2em;
-      margin: 1.2em auto;
-      max-width: 510px;
-      text-align: left;
-    }
-    .card h3 {
-      margin: 0 0 .6em;
-      font-size: .9em;
-      font-weight: 700;
-      color: #adb5bd;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      text-align: center;
-    }
-    .muted { color: #adb5bd; font-size: .9em; }
-    a {
-      color: #06c;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-    @keyframes fi {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    .main {
-      animation: fi 1.5s .7s both;
-    }
-    ol {
-      margin: auto;
-      text-align: left;
-      display: inline-block;
-    }
-    
-    li::marker {
-      color: #6c757d;
-      font-weight: 600;
-    }
-    li {
-      margin: 5px 5px 12px 5px;
-      line-height: 1.5;
-    }
+    ol { margin: auto; text-align: left; display: inline-block; }
+    li::marker { color: #6c757d; font-weight: 600; }
+    li { margin: 5px 5px 12px 5px; line-height: 1.5; }
     li b { color: #fff; }
-    .verstr {
-      font-weight: bold;
-    }
-    .devhead {
-      margin: 0 0 1em;
-      text-align: left;
-    }
-    .devhead h1 {
-      margin: 0;
-      font-size: 1.65em;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: .5em;
-    }
-    .devhead h1 svg {
-      width: 1.4em;
-      height: 1.4em;
-      flex: 0 0 auto;
-    }
-    .devhead h1 .tag {
-      font-size: .6em;
-      font-weight: 500;
-      color: #adb5bd;
-      margin-left: .4em;
-      opacity: .85;
-    }
-    .devhead .sub {
-      color: #adb5bd;
-      font-size: .95em;
-      margin-top: .2em;
-    }
-        </style>
+    .verstr { font-weight: bold; }
+    .footer { margin-top: 2em; }
+  </style>
   <script
     type="module"
     src="installer/install-button.js?v=ca68f3f9"
   ></script>
 </head>
 <body onload="checkSupported()">
-  <div class="main">
-    <div class="devhead">
-      <h1>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#666" d="M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z"/><path fill="#FB2" d="M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z"/><path fill="#555" d="M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z"/></svg>
-        ESPGeiger - Web Installer
-      </h1>
-      <div class="sub"><span class="verstr" id="verstr2">{version}</span></div>
-    </div>
+  <header class="topbar">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="#666" d="M256 0a256 256 0 1 1 0 512 256 256 0 0 1 0-512z"/><path fill="#FB2" d="M256 36a220 220 0 1 1 0 440 220 220 0 0 1 0-440z"/><path fill="#555" d="M256 286a30 30 0 1 0 0-60 30 30 0 0 0 0 60zm28-82 62-109a182 182 0 0 0-182 1l63 109a57 57 0 0 1 57-1zm155 51H313c0 21-11 39-28 49l64 108c54-32 90-90 90-157zM163 412l64-108a57 57 0 0 1-28-49H73c0 67 36 125 90 157z"/></svg>
+    <span class="title">ESPGeiger</span>
+    <span class="sub">Web Installer &middot; <span class="verstr" id="verstr2">{version}</span></span>
+    <a class="home" href="https://espgeiger.com/">espgeiger.com &rarr;</a>
+  </header>
+  <div class="content">
+    <div class="main">
     <div id="flasher">
       <ol>
         <li>Select your counter type.</li>
@@ -202,7 +68,7 @@
         </select>
         <div id="screen">
           <input type="checkbox" id="sd1306" name="sd1306" onchange="setManifest()">
-          <label for="sd1306"> I have a SD1306 OLED screen connected</label>
+          <label for="sd1306">I have a SD1306 OLED screen connected</label>
         </div>
         <div id="advice" class="muted"></div>
         <div class="inst-button">
@@ -215,13 +81,14 @@
         </div>
       </div>
     </div>
-    <p class="muted" style="margin-top:2em">
+    <p class="muted footer">
       <a href="https://docs.espgeiger.com/" target="_blank">Docs</a>
       &middot; <a href="https://github.com/steadramon/ESPGeiger" target="_blank">GitHub</a>
       &middot; <a href="https://stations.espgeiger.com/privacy" target="_blank">Privacy</a>
       &middot; Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>
     </p>
     <a href="https://hits.sh/install.espgeiger.com/"><img alt="Hits" src="https://hits.sh/install.espgeiger.com.svg"/></a>
+    </div>
   </div>
 <script>
   function setManifest() {
@@ -231,7 +98,7 @@
     var m = 'bin/' + buildtype_opt.dataset.manifest + '/';
 
     var me = buildtype_opt.dataset.nooled;
-    document.getElementById('screen').style.display = me ? "none":"block";
+    document.getElementById('screen').style.display = me ? "none" : "flex";
     if (!me && document.getElementById('sd1306').checked) {
       m += 'oled/';
     }
@@ -265,7 +132,7 @@
     if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
     else setManifest();
   }
-  
+
   function unsupported() {
     document.getElementById('flasher').innerHTML = "Sorry, your browser is not yet supported!<br>Please try on Desktop Chrome or Edge.<br>"
   }
