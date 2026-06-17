@@ -11,7 +11,6 @@ on:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-# One build per ref at a time.
 concurrency:
   group: installer-${{ github.ref }}
   cancel-in-progress: false
@@ -28,73 +27,40 @@ jobs:
         with:
           ref: main
 
-      - name: Download release artifacts
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Download webinstall payload from release
         uses: robinraju/release-downloader@v1.10
         id: releaseid
         with:
           repository: "steadramon/ESPGeiger"
           latest: ${{ github.event.inputs.tag == '' }}
           tag: ${{ github.event.inputs.tag }}
-          fileName: "*.bin"
+          fileName: "ESPGeiger_webinstall.*.zip"
           out-file-path: "downloaded"
 
-      - name: Move firmware files into bin/<env>/
+      - name: Verify payload
         run: |
-          # ESPGeiger-Log (ESP8266-only) builds
-          mv ./downloaded/espgeigerhw-firmware.*bin           bin/espgeigerhw/espgeigerhw-firmware.bin
-          mv ./downloaded/espgeigerlog-firmware.*bin          bin/espgeigerlog/espgeigerlog-firmware.bin
-          mv ./downloaded/espgeigerlog_serial-firmware.*bin   bin/espgeigerlog_serial/espgeigerlog_serial-firmware.bin
-          mv ./downloaded/espgeigerlog_test-firmware.*bin     bin/espgeigerlog_test/espgeigerlog_test-firmware.bin
+          ZIP=$(ls downloaded/ESPGeiger_webinstall.*.zip)
+          python3 script/verify_payload.py "$ZIP"
 
-          # CAJOE single-build
-          mv ./downloaded/esp32_cajoe_iotgm-firmware_merged.*bin bin/cajoeiot/esp32_cajoe_iotgm-firmware.bin
-
-          # Serial (collapsed - protocol picked at runtime in web portal)
-          mv ./downloaded/esp32_serial-firmware_merged.*bin     bin/serial/esp32_serial-firmware.bin
-          mv ./downloaded/esp32s3_serial-firmware_merged.*bin   bin/serial/esp32s3_serial-firmware.bin
-          mv ./downloaded/esp8266_serial-firmware.*bin          bin/serial/esp8266_serial-firmware.bin
-          mv ./downloaded/esp32oled_serial-firmware_merged.*bin   bin/serial/oled/esp32oled_serial-firmware.bin
-          mv ./downloaded/esp32s3oled_serial-firmware_merged.*bin bin/serial/oled/esp32s3oled_serial-firmware.bin
-          mv ./downloaded/esp8266oled_serial-firmware.*bin        bin/serial/oled/esp8266oled_serial-firmware.bin
-
-          # Pulse (default: ESP8266 native, ESP32 + ESP32-S3 interrupt-based - no PCNT)
-          mv ./downloaded/esp32_pulse_no_pcnt-firmware_merged.*bin       bin/pulse/esp32_pulse_no_pcnt-firmware.bin
-          mv ./downloaded/esp32s3_pulse_no_pcnt-firmware_merged.*bin     bin/pulse/esp32s3_pulse_no_pcnt-firmware.bin
-          mv ./downloaded/esp8266_pulse-firmware.*bin                    bin/pulse/esp8266_pulse-firmware.bin
-          mv ./downloaded/esp32oled_pulse_no_pcnt-firmware_merged.*bin   bin/pulse/oled/esp32oled_pulse_no_pcnt-firmware.bin
-          mv ./downloaded/esp32s3oled_pulse_no_pcnt-firmware_merged.*bin bin/pulse/oled/esp32s3oled_pulse_no_pcnt-firmware.bin
-          mv ./downloaded/esp8266oled_pulse-firmware.*bin                bin/pulse/oled/esp8266oled_pulse-firmware.bin
-
-          # Pulse - PCNT (ESP32 / ESP32-S3 hardware pulse counter, opt-in dedicated build)
-          mv ./downloaded/esp32_pulse-firmware_merged.*bin       bin/pulse_pcnt/esp32_pulse-firmware.bin
-          mv ./downloaded/esp32s3_pulse-firmware_merged.*bin     bin/pulse_pcnt/esp32s3_pulse-firmware.bin
-          mv ./downloaded/esp32oled_pulse-firmware_merged.*bin   bin/pulse_pcnt/oled/esp32oled_pulse-firmware.bin
-          mv ./downloaded/esp32s3oled_pulse-firmware_merged.*bin bin/pulse_pcnt/oled/esp32s3oled_pulse-firmware.bin
-
-          # Test
-          mv ./downloaded/esp32_test-firmware_merged.*bin     bin/test/esp32_test-firmware.bin
-          mv ./downloaded/esp8266_test-firmware.*bin          bin/test/esp8266_test-firmware.bin
-          mv ./downloaded/esp32oled_test-firmware_merged.*bin bin/test/oled/esp32oled_test-firmware.bin
-          mv ./downloaded/esp8266oled_test-firmware.*bin      bin/test/oled/esp8266oled_test-firmware.bin
-
-          # Test pulse
-          mv ./downloaded/esp32_testpulse-firmware_merged.*bin    bin/test_pulse/esp32_testpulse-firmware.bin
-          mv ./downloaded/esp8266_testpulse-firmware.*bin         bin/test_pulse/esp8266_testpulse-firmware.bin
-          mv ./downloaded/esp32oled_testpulse-firmware_merged.*bin bin/test_pulse/oled/esp32oled_testpulse-firmware.bin
-          mv ./downloaded/esp8266oled_testpulse-firmware.*bin     bin/test_pulse/oled/esp8266oled_testpulse-firmware.bin
-
-          rm -rf ./downloaded
-
-      - name: Substitute version tag in manifests + index.htm
+      - name: Regenerate manifests from payload
         run: |
           TAG="${{ steps.releaseid.outputs.tag_name }}"
-          # Strip the leading "v" so {version} ends up as a clean semver
-          # string (e.g. v0.12.0-RC2 -> 0.12.0-RC2). esp-web-tools shows
-          # this in its dialog and OTA download links use it as a suffix.
           VERSION="${TAG#v}"
-          echo "Tagging build as $VERSION (release: $TAG)"
-          sed -i "s#{version}#${VERSION}#g" bin/*/manifest.json
-          sed -i "s#{version}#${VERSION}#g" bin/*/*/manifest.json
+          ZIP=$(ls downloaded/ESPGeiger_webinstall.*.zip)
+          python3 script/sync_release.py "$VERSION" --zip "$ZIP"
+          rm -rf downloaded
+
+      - name: Substitute version tag in remaining placeholders
+        run: |
+          TAG="${{ steps.releaseid.outputs.tag_name }}"
+          VERSION="${TAG#v}"
+          # sync_release.py already renders manifests; this catches index.htm
+          # plus any non-manifest spot that still uses {version}.
           sed -i "s#{version}#${VERSION}#g" index.htm
 
       - name: Force-update firmware branch in place
@@ -103,8 +69,7 @@ jobs:
           git config user.name "github-actions[bot]"
           # Drop the workflow tree so the firmware branch isn't shadow-publishing
           # CI definitions, then orphan-commit the working tree as a single fresh
-          # commit (no main-history bloat). Force-update the firmware branch tip.
-          # Critical: never `git push --delete firmware` — Pages drops its source
+          # commit. Never `git push --delete firmware` - Pages drops its source
           # binding when the branch goes missing and then 404s after re-creation.
           rm -rf .github
           git checkout --orphan firmware-build
