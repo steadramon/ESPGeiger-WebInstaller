@@ -19,8 +19,8 @@ Usage:
 from __future__ import annotations
 import argparse
 import json
+import re
 import shutil
-import subprocess
 import sys
 import tempfile
 import urllib.request
@@ -86,15 +86,19 @@ def build_group(group: dict, payload_root: Path, version: str) -> bool:
         env_dest.mkdir(parents=True, exist_ok=True)
         for part in offsets["parts"]:
             shutil.copy2(src / part["file"], env_dest / part["file"])
+        # Version on each path so a new release always invalidates browser cache
+        # for the firmware bins (the bins themselves overwrite at stable URLs).
         builds.append({
             "chipFamily": offsets["chipFamily"],
-            "parts": [{"path": f"{env}/{p['file']}", "offset": p["offset"]}
+            "parts": [{"path": f"{env}/{p['file']}?v={version}", "offset": p["offset"]}
                       for p in offsets["parts"]],
         })
 
-    if missing:
-        print(f"  {group['path']}: missing envs {missing}")
+    if not builds:
+        print(f"  {group['path']}: no envs available, skipping")
         return False
+    if missing:
+        print(f"  {group['path']}: partial - {len(builds)} present, missing {missing}")
 
     manifest = {
         "name": group["name"].replace("{version}", version),
@@ -124,14 +128,16 @@ def main():
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
-    # Update the homepage version string + add release banner via index.htm
+    # Update index.htm: bump the visible "ESPGeiger vX.Y.Z" string AND replace
+    # bare {version} placeholders (used for download links + the cache-buster
+    # query on the manifest URL).
     idx = REPO / "index.htm"
     if idx.exists():
         text = idx.read_text()
-        new = subprocess.run(["sed", "-E",
-                              f"s/(ESPGeiger v)[0-9.]+/\\1{args.version}/g"],
-                             input=text, capture_output=True, text=True).stdout
-        if new and new != text:
+        new = re.sub(r"(ESPGeiger v)[0-9.]+(?:-[a-z0-9.]+)?",
+                     rf"\g<1>{args.version}", text)
+        new = new.replace("{version}", args.version)
+        if new != text:
             idx.write_text(new)
             print(f"updated index.htm to v{args.version}")
 
