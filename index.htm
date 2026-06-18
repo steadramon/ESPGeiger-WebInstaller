@@ -73,7 +73,7 @@
         <div class="inst-button">
           <esp-web-install-button
             id="inst"
-            manifest="bin/test/manifest.json"
+            manifest="bin/test/manifest.json?v={version}"
           >
             <button class="btn" slot="activate">Install</button>
           </esp-web-install-button>
@@ -102,7 +102,7 @@
       m += 'oled/';
     }
 
-    m += 'manifest.json';
+    m += 'manifest.json?v={version}';
 
     var advice = buildtype_opt.dataset.advice;
     document.getElementById('advice').style.display = advice ? "block":"none";
