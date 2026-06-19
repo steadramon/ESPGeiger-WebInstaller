@@ -101,7 +101,8 @@ def build_group(group: dict, payload_root: Path, version: str) -> bool:
         print(f"  {group['path']}: partial - {len(builds)} present, missing {missing}")
 
     manifest = {
-        "name": group["name"].replace("{version}", version),
+        "name": group["name"],
+        "version": version,
         **DEFAULT_OPTS,
         "builds": builds,
     }

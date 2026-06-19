@@ -1,9 +1,9 @@
 {
-  "_comment": "Source of truth for which envs go in which webinstaller group. The sync_release.py script regenerates each manifest.json from this plus the offsets.json embedded in the release's webinstall zip.",
+  "_comment": "Source of truth for which envs go in which webinstaller group. The sync_release.py script regenerates each manifest.json from this plus the offsets.json embedded in the release's webinstall zip. The `name` field must match what the running firmware advertises over Improv (ImprovSerial::send_device_info) so esp-web-tools recognises the upgrade as same-firmware and preserves NVS without prompting the user to erase. Version is supplied separately via the manifest's `version` field, not embedded in `name`.",
   "groups": [
     {
       "path": "pulse",
-      "name": "ESPGeiger Pulse {version}",
+      "name": "ESPGeiger Pulse",
       "envs": {
         "ESP32":    "esp32_pulse_no_pcnt",
         "ESP32-S3": "esp32s3_pulse_no_pcnt",
@@ -13,7 +13,7 @@
     },
     {
       "path": "pulse/oled",
-      "name": "ESPGeiger OLED Pulse {version}",
+      "name": "ESPGeiger Pulse",
       "envs": {
         "ESP32":    "esp32_pulse_no_pcnt",
         "ESP32-S3": "esp32s3_pulse_no_pcnt",
@@ -23,7 +23,7 @@
     },
     {
       "path": "pulse_pcnt",
-      "name": "ESPGeiger Pulse PCNT {version}",
+      "name": "ESPGeiger Pulse",
       "envs": {
         "ESP32":    "esp32_pulse",
         "ESP32-S3": "esp32s3_pulse"
@@ -31,7 +31,7 @@
     },
     {
       "path": "pulse_pcnt/oled",
-      "name": "ESPGeiger OLED Pulse PCNT {version}",
+      "name": "ESPGeiger Pulse",
       "envs": {
         "ESP32":    "esp32_pulse",
         "ESP32-S3": "esp32s3_pulse"
@@ -39,7 +39,7 @@
     },
     {
       "path": "serial",
-      "name": "ESPGeiger Serial {version}",
+      "name": "ESPGeiger Serial",
       "envs": {
         "ESP32":    "esp32_serial",
         "ESP32-S3": "esp32s3_serial",
@@ -49,7 +49,7 @@
     },
     {
       "path": "serial/oled",
-      "name": "ESPGeiger OLED Serial {version}",
+      "name": "ESPGeiger Serial",
       "envs": {
         "ESP32":    "esp32_serial",
         "ESP32-S3": "esp32s3_serial",
@@ -59,7 +59,7 @@
     },
     {
       "path": "test",
-      "name": "ESPGeiger Test {version}",
+      "name": "ESPGeiger Test",
       "envs": {
         "ESP32":   "esp32_test",
         "ESP8266": "esp8266_test"
@@ -67,7 +67,7 @@
     },
     {
       "path": "test/oled",
-      "name": "ESPGeiger OLED Test {version}",
+      "name": "ESPGeiger Test",
       "envs": {
         "ESP32":   "esp32_test",
         "ESP8266": "esp8266oled_test"
@@ -75,35 +75,35 @@
     },
     {
       "path": "cajoeiot",
-      "name": "ESPGeiger Cajoe IOT {version}",
+      "name": "ESPGeiger CajoeESP",
       "envs": {
         "ESP32": "esp32_cajoe_iotgm"
       }
     },
     {
       "path": "espgeigerlog",
-      "name": "ESPGeiger-Log {version}",
+      "name": "ESPGeiger-Log",
       "envs": {
         "ESP8266": "espgeigerlog"
       }
     },
     {
       "path": "espgeigerlog_serial",
-      "name": "ESPGeiger-Log Serial {version}",
+      "name": "ESPGeiger-Log",
       "envs": {
         "ESP8266": "espgeigerlog_serial"
       }
     },
     {
       "path": "espgeigerlog_test",
-      "name": "ESPGeiger-Log Test {version}",
+      "name": "ESPGeiger-Log",
       "envs": {
         "ESP8266": "espgeigerlog_test"
       }
     },
     {
       "path": "espgeigerhw",
-      "name": "ESPGeiger-HW {version}",
+      "name": "ESPGeiger-HW",
       "envs": {
         "ESP8266": "espgeigerhw"
       }
