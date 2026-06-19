@@ -127,6 +127,12 @@
       }
     }
 
+    document.getElementById('inst').overrides = {
+      checkSameFirmware: (m, i) =>
+        /^ESPGeiger/.test((m && m.name) || '') &&
+        /^ESPGeiger/.test((i && i.firmware) || '')
+    };
+
     if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
     else setManifest();
   }
