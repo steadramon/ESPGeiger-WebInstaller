@@ -15,8 +15,9 @@
       "path": "pulse/oled",
       "name": "ESPGeiger OLED Pulse {version}",
       "envs": {
-        "ESP32":    "esp32oled_pulse_no_pcnt",
-        "ESP32-S3": "esp32s3oled_pulse_no_pcnt",
+        "ESP32":    "esp32_pulse_no_pcnt",
+        "ESP32-S3": "esp32s3_pulse_no_pcnt",
+        "ESP32-C3": "esp32c3_pulse",
         "ESP8266":  "esp8266oled_pulse"
       }
     },
@@ -32,8 +33,8 @@
       "path": "pulse_pcnt/oled",
       "name": "ESPGeiger OLED Pulse PCNT {version}",
       "envs": {
-        "ESP32":    "esp32oled_pulse",
-        "ESP32-S3": "esp32s3oled_pulse"
+        "ESP32":    "esp32_pulse",
+        "ESP32-S3": "esp32s3_pulse"
       }
     },
     {
@@ -50,8 +51,9 @@
       "path": "serial/oled",
       "name": "ESPGeiger OLED Serial {version}",
       "envs": {
-        "ESP32":    "esp32oled_serial",
-        "ESP32-S3": "esp32s3oled_serial",
+        "ESP32":    "esp32_serial",
+        "ESP32-S3": "esp32s3_serial",
+        "ESP32-C3": "esp32c3_serial",
         "ESP8266":  "esp8266oled_serial"
       }
     },
@@ -67,24 +69,8 @@
       "path": "test/oled",
       "name": "ESPGeiger OLED Test {version}",
       "envs": {
-        "ESP32":   "esp32oled_test",
+        "ESP32":   "esp32_test",
         "ESP8266": "esp8266oled_test"
-      }
-    },
-    {
-      "path": "test_pulse",
-      "name": "ESPGeiger Test Pulse {version}",
-      "envs": {
-        "ESP32":   "esp32_testpulse",
-        "ESP8266": "esp8266_testpulse"
-      }
-    },
-    {
-      "path": "test_pulse/oled",
-      "name": "ESPGeiger OLED Test Pulse {version}",
-      "envs": {
-        "ESP32":   "esp32oled_testpulse",
-        "ESP8266": "esp8266oled_testpulse"
       }
     },
     {
