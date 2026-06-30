@@ -1,0 +1,50 @@
+{
+  "name": "ESPGeiger Pulse",
+  "version": "0.12.4",
+  "new_install_prompt_erase": true,
+  "new_install_improv_wait_time": 10,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "esp32_pulse/bootloader.bin?v=0.12.4",
+          "offset": 4096
+        },
+        {
+          "path": "esp32_pulse/partitions.bin?v=0.12.4",
+          "offset": 32768
+        },
+        {
+          "path": "esp32_pulse/boot_app0.bin?v=0.12.4",
+          "offset": 57344
+        },
+        {
+          "path": "esp32_pulse/firmware.bin?v=0.12.4",
+          "offset": 65536
+        }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "esp32s3_pulse/bootloader.bin?v=0.12.4",
+          "offset": 0
+        },
+        {
+          "path": "esp32s3_pulse/partitions.bin?v=0.12.4",
+          "offset": 32768
+        },
+        {
+          "path": "esp32s3_pulse/boot_app0.bin?v=0.12.4",
+          "offset": 57344
+        },
+        {
+          "path": "esp32s3_pulse/firmware.bin?v=0.12.4",
+          "offset": 65536
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ESPGeiger CajoeESP",
+  "version": "0.12.4",
+  "new_install_prompt_erase": true,
+  "new_install_improv_wait_time": 10,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "esp32_cajoe_iotgm/bootloader.bin?v=0.12.4",
+          "offset": 4096
+        },
+        {
+          "path": "esp32_cajoe_iotgm/partitions.bin?v=0.12.4",
+          "offset": 32768
+        },
+        {
+          "path": "esp32_cajoe_iotgm/boot_app0.bin?v=0.12.4",
+          "offset": 57344
+        },
+        {
+          "path": "esp32_cajoe_iotgm/firmware.bin?v=0.12.4",
+          "offset": 65536
+        }
+      ]
+    }
+  ]
+}
