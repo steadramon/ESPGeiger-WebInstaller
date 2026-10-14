@@ -66,7 +66,7 @@
         </select>
         <div id="screen">
           <input type="checkbox" id="sd1306" name="sd1306" onchange="setManifest()">
-          <label for="sd1306">I have a SD1306 OLED screen connected</label>
+          <label for="sd1306">I have a display connected (OLED or LED)</label>
         </div>
         <div id="advice" class="muted"></div>
         <div class="inst-button">
@@ -119,6 +119,7 @@
     let boardParam = urlParams.get('board');
     // Back-compat: pulse_no_pcnt was renamed to pulse_pcnt when the default flipped.
     if (boardParam === 'pulse_no_pcnt') boardParam = 'pulse_pcnt';
+    if (urlParams.get('oled') === '1') document.getElementById('sd1306').checked = true;
     if (boardParam) {
       for (i = 0; i < document.getElementById("buildtype").length; ++i){
         if (document.getElementById("buildtype").options[i].dataset.manifest == boardParam){
