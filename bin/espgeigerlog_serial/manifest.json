@@ -1,0 +1,17 @@
+{
+  "name": "ESPGeiger-Log",
+  "version": "0.13.0",
+  "new_install_prompt_erase": true,
+  "new_install_improv_wait_time": 10,
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+        {
+          "path": "espgeigerlog_serial/firmware.bin?v=0.13.0",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
